@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import sys
 import dj_database_url
 import logging
 from pathlib import Path
@@ -135,7 +136,8 @@ LOGGING = {
         },
         'file': {
             'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
-        }
+        },
+        "json": {"()": "json_log_formatter.JSONFormatter"},
     },
     'handlers': {
         'console': {
@@ -147,12 +149,18 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'formatter': 'file',
             'filename': '/tmp/debug.log'
-        }
+        },
+        "json_console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+            "formatter": "json",
+        },
     },
     'loggers': {
         '': {
             'level': 'DEBUG',
-            'handlers': ['console', 'file']
+            'handlers': ['console', "json_console"]
         }
     }
 }
