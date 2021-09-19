@@ -57,6 +57,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'app.urls'
 
+REST_FRAMEWORK = {
+
+    "EXCEPTION_HANDLER": "helpers.exception_handler.JSONExceptionHandler",
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -131,6 +136,10 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
+        "standard": {
+            "format": "%(levelname)s %(asctime)s (%(name)s) %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
         'console': {
             'format': '%(name)-12s %(levelname)-8s %(message)s'
         },
@@ -160,7 +169,9 @@ LOGGING = {
     'loggers': {
         '': {
             'level': 'DEBUG',
-            'handlers': ['console', "json_console"]
-        }
+            'handlers': ['console'],
+            "propagate": False
+        },
+        "audit": {"level": "INFO", "handlers": ["json_console"], "propagate": False},
     }
 }
