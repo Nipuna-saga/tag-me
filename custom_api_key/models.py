@@ -1,6 +1,7 @@
 from django.db import models
-
 from django.contrib.auth.models import User
+
+from rest_framework.request import HttpRequest
 from rest_framework_api_key.models import AbstractAPIKey
 
 
@@ -11,7 +12,7 @@ class CustomAPIKey(AbstractAPIKey):
         return f"{self.user}"
 
     @staticmethod
-    def get_user(request):
-        key = request.META.get("HTTP_AUTHORIZATION").split()[1]
-        api_key = CustomAPIKey.objects.get_from_key(key)
+    def get_user(request: HttpRequest) -> User:
+        key: str = request.META.get("HTTP_AUTHORIZATION").split()[1]
+        api_key: CustomAPIKey = CustomAPIKey.objects.get_from_key(key)
         return api_key.user

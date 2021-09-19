@@ -1,6 +1,9 @@
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+from rest_framework.request import HttpRequest
 from rest_framework import status
 
 from .models import Image
@@ -17,20 +20,20 @@ logger = logging.getLogger("audit")
 class ImageView(APIView):
     permission_classes = [HasUserAPIKey]
 
-    def get(self, request):
+    def get(self, request: HttpRequest) -> Response:
 
-        images = Image.objects.all()
+        images: Image = Image.objects.all()
         logger.info(f"images.get", extra={"user": request.user.id})
-        serializer = ImageSerializer(images, many=True)
+        serializer: ImageSerializer = ImageSerializer(images, many=True)
         return Response(serializer.data)
 
-    def post(self, request):
+    def post(self, request: HttpRequest) -> Response:
 
-        name = request.data.get("name", "")
-        upload = request.data['upload']
-        user = CustomAPIKey.get_user(request)
+        name: str = request.data.get("name", "")
+        upload: str = request.data['upload']
+        user: User = CustomAPIKey.get_user(request)
 
-        image = Image(
+        image: Image = Image(
             name=name,
             upload=upload,
             uploader=user
@@ -46,15 +49,15 @@ class ImageView(APIView):
         )
         return Response(ImageSerializer(image).data)
 
-    def put(self, request):
+    def put(self, request: HttpRequest) -> Response:
 
-        name = request.data.get("name", "")
-        upload = request.data.get('upload')
-        user = CustomAPIKey.get_user(request)
-        image_id = request.data.get("id")
+        name: str = request.data.get("name", "")
+        upload: str = request.data.get('upload')
+        user: User = CustomAPIKey.get_user(request)
+        image_id: int = request.data.get("id")
 
         try:
-            current_image = Image.objects.get(id=image_id)
+            current_image: Image = Image.objects.get(id=image_id)
             current_image.name = name
             if upload:
                 current_image.upload = upload
@@ -69,12 +72,12 @@ class ImageView(APIView):
         )
         return Response(ImageSerializer(current_image).data)
 
-    def delete(self, request):
-        user = CustomAPIKey.get_user(request)
-        image_id = request.data.get("id")
+    def delete(self, request: HttpRequest) -> Response:
+        user: User = CustomAPIKey.get_user(request)
+        image_id: int = request.data.get("id")
         try:
 
-            image = get_object_or_404(Image, id=image_id)
+            image: Image = get_object_or_404(Image, id=image_id)
 
             logger.info(
                 f"image.delete",

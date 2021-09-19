@@ -1,7 +1,7 @@
 from rest_framework.views import exception_handler
 
 
-def JSONExceptionHandler(exc, context):
+def JSONExceptionHandler(exc: any, context: dict) -> any:
     # Do not remove this line!
     # If the following line is removed, then the request.POST continues
     # to return an empty QueryDict when passed to the exception logger,
