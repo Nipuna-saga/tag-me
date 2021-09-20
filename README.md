@@ -33,6 +33,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#deployment">Deployment</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
@@ -46,7 +47,7 @@ System that use for tag images.
 
 ### Built With
 
-* Backend - [Django](https://github.com/django/django)
+* Backend - [Python Django](https://www.djangoproject.com/)
 * Database - [PostgreSQL](https://www.postgresql.org/)
 
 <!-- GETTING STARTED -->
@@ -81,14 +82,18 @@ To get a local copy up and running follow these simple steps.
    ```sh
    python manage.py makemigrations
    ```
-3. Create database via migration files
+3. Apply database migrations
    ```sh
    python manage.py migrate
-   
-3. Run unit tests
+   ```
+4. Create super-user
+   ```sh
+   python manage.py createsuperuser
+   ```
+5. Run unit tests
    ```sh
    python manage.py test
-
+   ```
 <!-- USAGE EXAMPLES -->
 
 ## Usage
@@ -98,9 +103,8 @@ Please watch the demo [video](https://youtu.be/NY68Grl0v7c) to see usage of the 
 
 ## Deployment
 
-Because of the nature of this system. we can use serverless architecture can be used to host this system.
-We can use AWS lambda with AWS API gateway. and AWS S3 buckets to store images.
-And also AWS code pipelines can be used for auto deployments.
+Because of the nature of this system, serverless architecture can be used to host it. AWS lambda can be used with 
+AWS API gateway and AWS S3 buckets to store images. And also AWS code pipelines can be used for auto deployments.
 
 
 <!-- CONTACT -->
