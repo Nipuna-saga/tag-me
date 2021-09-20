@@ -30,6 +30,7 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#initialmigration">InitialMigration</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -72,7 +73,7 @@ To get a local copy up and running follow these simple steps.
    ```
 3. Follow the steps in usage section
 
-### First time migration
+### InitialMigration
 
 1. Connect to the docker container
    ```sh
